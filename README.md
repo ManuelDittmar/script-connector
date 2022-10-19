@@ -3,7 +3,6 @@
 > To use this template update the following resources to match the name of your connector:
 >
 > * [README](./README.md) (title, description)
-> * [Element Template](./element-templates/template-connector.json)
 > * [POM](./pom.xml) (artifact name, id, description)
 > * [Connector Function](./src/main/java/io/camunda/connector/MyConnectorFunction.java) (rename, implement, update `OutboundConnector` annotation)
 > * [Service Provider Interface (SPI)](./src/main/resources/META-INF/services/io.camunda.connector.api.ConnectorFunction#L1) (rename)
@@ -11,9 +10,9 @@
 > ...and delete this hint.
 
 
-# Connector Template
+# Script Connector
 
-Camunda Connector Template
+Camunda Connector to execute Scripts
 
 ## Build
 
@@ -54,4 +53,4 @@ Use the [Camunda Job Worker Connector Run-Time](https://github.com/camunda/conne
 
 ## Element Template
 
-The element templates can be found in the [element-templates/template-connector.json](element-templates/template-connector.json) file.
+The element templates can be found in the [element-templates/template-connector.json](element-templates/script-connector.json) file.

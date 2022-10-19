@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <name>connector-template</name>
-  <description>Camunda Connector Template</description>
+  <name>script-connector</name>
+  <description>Camunda Script Connector</description>
   <groupId>io.camunda.connector</groupId>
-  <artifactId>connector-template</artifactId>
+  <artifactId>script-connector</artifactId>
   <packaging>jar</packaging>
   <version>0.1.0-SNAPSHOT</version>
 
@@ -21,6 +21,8 @@
     <version.junit-jupiter>5.9.0</version.junit-jupiter>
     <version.mockito>4.7.0</version.mockito>
     <version.slf4j>1.7.36</version.slf4j>
+    <version.groovy>2.4.21</version.groovy>
+    <version.graalvm>22.0.0</version.graalvm>
 
     <!-- maven plugins -->
     <plugin.version.maven-clean-plugin>3.2.0</plugin.version.maven-clean-plugin>
@@ -63,16 +65,50 @@
       <version>${version.mockito}</version>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <version>${version.assertj}</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js</artifactId>
+      <version>${version.graalvm}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js-scriptengine</artifactId>
+      <version>${version.graalvm}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-all</artifactId>
+      <version>${version.groovy}</version>
+    </dependency>
   </dependencies>
 
+
   <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.4.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
     <pluginManagement>
       <plugins>
         <plugin>

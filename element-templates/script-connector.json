@@ -1,0 +1,95 @@
+{
+  "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name": "External Script Task",
+  "id": "9789a47f-1c94-4a87-9d60-8bc68d0259ab",
+  "category": {
+    "id": "connectors",
+    "name": "Connectors"
+  },
+  "appliesTo": [
+    "bpmn:Task"
+  ],
+  "elementType": {
+    "value": "bpmn:ScriptTask"
+  },
+  "groups": [
+    {
+      "id": "input",
+      "label": "Script Input"
+    },
+    {
+      "id": "output",
+      "label": "Output Mapping"
+    }
+  ],
+  "properties": [
+    {
+      "type": "Hidden",
+      "value": "io.camunda:script",
+      "binding": {
+        "type": "zeebe:taskDefinition:type"
+      }
+    },
+    {
+      "id": "language",
+      "label": "Scripting Language",
+      "description": "Specify the scripting language to use.",
+      "group": "input",
+      "type": "Dropdown",
+      "value": "javascript",
+      "choices": [
+        {
+          "name": "JavaScript",
+          "value": "javascript"
+        },
+        {
+          "name": "Groovy",
+          "value": "groovy"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "language"
+      }
+    },
+    {
+      "label": "Script",
+      "description": "Specify the script to execute.",
+      "group": "input",
+      "type": "String",
+      "feel": "optional",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "script"
+      },
+      "constraints": {
+        "notEmpty": true,
+        "pattern":{
+          "value":"^[^\"]*$",
+          "message":"Use single quotes for strings."
+        }
+      }
+    },
+    {
+      "label": "Result",
+      "description": "Name of variable to store the result in.",
+      "group": "output",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultVariable"
+      }
+    },
+    {
+      "label": "Result Expression",
+      "description": "Expression to map the response into process variables",
+      "group": "output",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultExpression"
+      }
+    }
+  ]
+}
