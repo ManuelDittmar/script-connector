@@ -1,5 +1,6 @@
 package io.camunda.connector;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.camunda.connector.api.annotation.OutboundConnector;
 import io.camunda.connector.api.outbound.OutboundConnectorContext;
 import io.camunda.connector.api.outbound.OutboundConnectorFunction;
@@ -15,17 +16,19 @@ public class ScriptConnectorFunction implements OutboundConnectorFunction {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ScriptConnectorFunction.class);
   private final ScriptEvaluator scriptEvaluator = new ScriptEvaluator();
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
   @Override
   public Object execute(OutboundConnectorContext context) throws Exception {
-    var connectorRequest = context.getVariablesAsType(ScriptRequest.class);
 
-    context.validate(connectorRequest);
+    ScriptRequest request = objectMapper.readValue(context.getVariables(), ScriptRequest.class);
 
-    return executeConnector(connectorRequest);
+    context.validate(request);
+
+    return executeConnector(request);
   }
 
   private Object executeConnector(final ScriptRequest connectorRequest) {
-    return scriptEvaluator.evaluate(connectorRequest.getLanguage(), connectorRequest.getScript());
+    return scriptEvaluator.evaluate(connectorRequest.getLanguage(), connectorRequest.getScript(), connectorRequest.getVariables());
   }
 }

@@ -2,21 +2,25 @@ package io.camunda.connector;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.camunda.connector.model.ScriptRequest;
 import io.camunda.connector.test.outbound.OutboundConnectorContextBuilder;
 import org.junit.jupiter.api.Test;
 
 public class ScriptConnectorFunctionTest {
 
+  String input =
+      "{\n"
+          + "   \"language\":\"javascript\",\n"
+          + "   \"script\":\"a + b\",\n"
+          + "   \"a\":5,\n"
+          + "   \"b\":7\n"
+          + "}";
+
   @Test
   void shouldReturnResultWhenExecuteJavaScript() throws Exception {
     // given
-    var input = new ScriptRequest();
-    input.setLanguage("javascript");
-    input.setScript("5 + 7");
     var function = new ScriptConnectorFunction();
     var context = OutboundConnectorContextBuilder.create()
-      .variables(input)
+        .variables(input)
       .build();
     // when
     var result = function.execute(context);
@@ -28,9 +32,6 @@ public class ScriptConnectorFunctionTest {
   @Test
   void shouldReturnResultWhenExecuteGroovy() throws Exception {
     // given
-    var input = new ScriptRequest();
-    input.setLanguage("groovy");
-    input.setScript("5 + 7");
     var function = new ScriptConnectorFunction();
     var context = OutboundConnectorContextBuilder.create()
         .variables(input)

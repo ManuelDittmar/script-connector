@@ -1,7 +1,12 @@
 package io.camunda.connector.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class ScriptRequest {
@@ -10,6 +15,9 @@ public class ScriptRequest {
   private String language;
   @NotEmpty
   private String script;
+
+  @JsonIgnore
+  private Map<String, Object> variables = new HashMap<>();
 
   public String getLanguage() {
     return language;
@@ -27,20 +35,32 @@ public class ScriptRequest {
     this.script = script;
   }
 
+  @JsonAnyGetter
+  public Map<String, Object> getVariables() {
+    return variables;
+  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(language, script);
+  @JsonAnySetter
+  public void addVariable(String key, Object value) {
+    this.variables.put(key, value);
   }
 
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (getClass() != obj.getClass()) return false;
-    ScriptRequest other = (ScriptRequest) obj;
-    return Objects.equals(script, other.script)
-        && Objects.equals(language, other.language);
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ScriptRequest that = (ScriptRequest) o;
+    return Objects.equals(language, that.language) && Objects.equals(script,
+        that.script) && Objects.equals(variables, that.variables);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(language, script, variables);
   }
 
   @Override
@@ -48,6 +68,7 @@ public class ScriptRequest {
     return "ScriptRequest{" +
         "language='" + language + '\'' +
         ", script='" + script + '\'' +
+        ", variables=" + variables +
         '}';
   }
 }
