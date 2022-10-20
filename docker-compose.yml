@@ -1,0 +1,10 @@
+services:
+  script-connector:
+    image: script-connector:0.1.0
+    container_name: script-connector
+    environment:
+      - ZEEBE_ADDRESS=xxx.bru-2.zeebe.camunda.io:443
+      - ZEEBE_CLIENT_ID=y0urc1ent1d
+      - ZEEBE_CLIENT_SECRET=y0urS3cr3t
+      - ZEEBE_AUTHORIZATION_SERVER_URL=https://login.cloud.camunda.io/oauth/token
+    restart: unless-stopped
