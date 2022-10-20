@@ -2,17 +2,15 @@
 >
 > To use this template update the following resources to match the name of your connector:
 >
-> * [README](./README.md) (title, description)
-> * [POM](./pom.xml) (artifact name, id, description)
 > * [Connector Function](./src/main/java/io/camunda/connector/MyConnectorFunction.java) (rename, implement, update `OutboundConnector` annotation)
-> * [Service Provider Interface (SPI)](./src/main/resources/META-INF/services/io.camunda.connector.api.ConnectorFunction#L1) (rename)
 >
 > ...and delete this hint.
 
 
 # Script Connector
 
-Camunda Connector to execute Scripts
+Camunda Connector to execute Scripts.
+Main Implementation was inspired by the [Zeebe Script Worker](https://github.com/camunda-community-hub/zeebe-script-worker/blob/master/src/main/resources/META-INF/services/org.camunda.feel.valuemapper.CustomValueMapper)
 
 ## Build
 
@@ -26,8 +24,8 @@ mvn clean package
 
 ```json
 {
-  "token": ".....",
-  "message": "....."
+  "language": ".....",
+  "script": "....."
 }
 ```
 
@@ -35,21 +33,29 @@ mvn clean package
 
 ```json
 {
-  "result": {
-    "myProperty": "....."
-  }
+  "result": "....."
 }
 ```
 
 ## Test locally
 
-Run unit tests
+Maven package
 
 ```bash
-mvn clean verify
+mvn clean package
 ```
 
-Use the [Camunda Job Worker Connector Run-Time](https://github.com/camunda/connector-framework/tree/main/runtime-job-worker) to run your function as a local Job Worker.
+Built docker image
+
+```bash
+docker build . -t script-connector:0.1.0
+```
+
+Run docker-compose
+
+```bash
+docker compose up
+```
 
 ## Element Template
 
