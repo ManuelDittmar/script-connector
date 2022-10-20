@@ -1,12 +1,3 @@
-> A template for new C8 connectors.
->
-> To use this template update the following resources to match the name of your connector:
->
-> * [Connector Function](./src/main/java/io/camunda/connector/MyConnectorFunction.java) (rename, implement, update `OutboundConnector` annotation)
->
-> ...and delete this hint.
-
-
 # Script Connector
 
 Camunda Connector to execute Scripts.
